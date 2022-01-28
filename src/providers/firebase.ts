@@ -1,5 +1,5 @@
 import {initializeApp} from 'firebase/app';
-import {collection, getFirestore} from 'firebase/firestore';
+import {collection, doc, getFirestore} from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyB41q3d6nBKp7YuvJ_CuAK2ji7oNAJ-7K4",
@@ -14,5 +14,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const todosCol = collection(db, 'todo');
+const todosDoc = (id: string) => doc(db, 'todo', id);
 
-export {todosCol};
+export {todosCol, todosDoc};

@@ -1,9 +1,8 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import {v4 as uuid4} from 'uuid';
 import Todo from '../domain/Todo';
-import {todosCol} from '../providers/firebase';
-import {addDoc, onSnapshot, query} from "firebase/firestore"
-
+import {todosCol, todosDoc} from '../providers/firebase';
+import {deleteDoc, onSnapshot, query, setDoc, updateDoc} from "firebase/firestore"
 
 class FirebaseTodoListStore {
 
@@ -22,17 +21,17 @@ class FirebaseTodoListStore {
     }
 
     async addTodo(todo: Todo) {
-        await addDoc(todosCol, {...todo, id: uuid4(), completed: false});
+        const id = uuid4();
+        setDoc(todosDoc(id), {...todo, id, completed: false});
     }
 
     toggleTodo(id: string) {
-        this.items = this.items.map((todo: Todo) =>
-            todo.id === id ? {...todo, completed: !todo.completed} : todo
-        )
+        const item = this.items.find((todo: Todo) => todo.id === id);
+        updateDoc(todosDoc(id), {completed: !item!.completed});
     }
 
     removeTodo(id: string) {
-        this.items = this.items.filter((item: Todo) => item.id !== id)
+        deleteDoc(todosDoc(id));
     }
 }
 

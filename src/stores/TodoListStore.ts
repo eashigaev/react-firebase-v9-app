@@ -4,14 +4,18 @@ import Todo from '../domain/Todo';
 
 class TodoListStore {
 
-    public items: Todo[] = [
-        {id: uuid4(), title: 'item 1', completed: false},
-        {id: uuid4(), title: 'item 2', completed: true},
-        {id: uuid4(), title: 'item 3', completed: false}
-    ]
+    public items: Todo[] = [];
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    fetchList() {
+        this.items = [
+            {id: uuid4(), title: 'item 1', completed: false},
+            {id: uuid4(), title: 'item 2', completed: true},
+            {id: uuid4(), title: 'item 3', completed: false}
+        ];
     }
 
     addTodo(todo: Todo) {
@@ -29,4 +33,4 @@ class TodoListStore {
     }
 }
 
-export default new TodoListStore();
+export default TodoListStore;

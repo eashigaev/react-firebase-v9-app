@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {observer} from "mobx-react-lite";
 import Todo from '../domain/Todo';
 
@@ -7,6 +7,7 @@ const TodoList = (props: any) => {
     const [addTodoState, setAddTodoState] = useState({
         'title': ''
     })
+
     const handleAddForm = (e: any) => {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -23,6 +24,12 @@ const TodoList = (props: any) => {
         store.addTodo(addTodoState);
         e.target.reset();
     }
+
+    console.log('render:TodoList');
+
+    useEffect(() => {
+        return store.fetchList();
+    }, []);
 
     return (
         <>

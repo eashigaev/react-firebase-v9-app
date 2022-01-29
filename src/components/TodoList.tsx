@@ -25,11 +25,9 @@ const TodoList = (props: any) => {
         e.target.reset();
     }
 
-    console.log('render:TodoList');
-
     useEffect(() => {
         return store.fetchList();
-    }, []);
+    }, [store]);
 
     return (
         <>

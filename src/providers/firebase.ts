@@ -14,6 +14,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const todosCol = collection(db, 'todo');
-const todosDoc = (id: string) => doc(db, 'todo', id);
+const todosDoc = (id: string) => doc(db, todosCol.path, id);
 
 export {todosCol, todosDoc};

@@ -8,7 +8,7 @@ function FirstPage() {
         <>
             <main>
                 <h2>In Memory Todo List</h2>
-                <TodoList store={new TodoListStore()}/>
+                <TodoList store={TodoListStore}/>
             </main>
             <nav>
                 <Link to="/second">Second Page</Link>

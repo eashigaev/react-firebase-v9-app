@@ -35,4 +35,4 @@ class FirebaseTodoListStore {
     }
 }
 
-export default FirebaseTodoListStore;
+export default new FirebaseTodoListStore();

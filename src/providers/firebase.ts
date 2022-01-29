@@ -1,5 +1,6 @@
 import {initializeApp} from 'firebase/app';
 import {collection, doc, getFirestore} from 'firebase/firestore';
+import {getAuth, GoogleAuthProvider} from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB41q3d6nBKp7YuvJ_CuAK2ji7oNAJ-7K4",
@@ -13,7 +14,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+const auth = getAuth();
+const googleProvider = new GoogleAuthProvider();
+
 const todosCol = collection(db, 'todo');
 const todosDoc = (id: string) => doc(db, todosCol.path, id);
 
-export {todosCol, todosDoc};
+export {auth, googleProvider, db, todosCol, todosDoc};

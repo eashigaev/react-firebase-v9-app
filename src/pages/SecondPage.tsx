@@ -8,7 +8,7 @@ function SecondPage() {
         <>
             <main>
                 <h2>Firebase Todo List</h2>
-                <TodoList store={new FirebaseTodoListStore()}/>
+                <TodoList store={FirebaseTodoListStore}/>
             </main>
             <nav>
                 <Link to="/">First Page</Link>

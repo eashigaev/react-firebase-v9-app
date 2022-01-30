@@ -12,7 +12,7 @@ class FirebaseTodoListStore {
         makeAutoObservable(this)
     }
 
-    async fetchList() {
+    fetchList() {
         const q = query(todosCol);
         return onSnapshot(q, (snap) => {
             const items = snap.docs.map((doc) => doc.data() as Todo);
@@ -20,7 +20,7 @@ class FirebaseTodoListStore {
         });
     }
 
-    async addTodo(todo: Todo) {
+    addTodo(todo: Todo) {
         const id = uuid4();
         setDoc(todosDoc(id), {...todo, id, completed: false});
     }

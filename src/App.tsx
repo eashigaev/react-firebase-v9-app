@@ -12,7 +12,7 @@ function App() {
     return (
         <div className="App">
             <h1>Welcome to the app!</h1>
-            <Auth authStore={AuthStore}/>
+            <Auth store={AuthStore}/>
             <Routes>
                 <Route path="/" element={<FirstPage/>}/>
                 <Route path="/second" element={<SecondPage/>}/>

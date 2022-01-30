@@ -1,7 +1,7 @@
-interface AuthUser {
+type AuthUser = {
     id: string;
     name: string;
-    photoURL: string;
+    photoUrl: string;
 }
 
 export default AuthUser;

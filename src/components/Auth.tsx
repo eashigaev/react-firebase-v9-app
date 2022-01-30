@@ -3,54 +3,60 @@ import {signInWithPopup, signOut} from "firebase/auth";
 import {auth, googleProvider} from '../providers/firebase';
 import {observer} from 'mobx-react-lite';
 import {runInAction} from 'mobx';
+import AuthStore from '../stores/AuthStore';
 
-const Auth = (props: any) => {
-
-    const {authStore} = props;
+const Auth = ({store}: AuthProps) => {
 
     const signInWithGoogle = () => signInWithPopup(auth, googleProvider).then((res) => {
         const googleUser = res.user;
         const authUser = {
-            id: googleUser.uid,
-            name: googleUser.displayName,
-            photoUrl: googleUser.photoURL
+            id: googleUser.uid!,
+            name: googleUser.displayName!,
+            photoUrl: googleUser.photoURL!
         };
-        runInAction(() => authStore.signIn(authUser));
+        runInAction(() => store.signIn(authUser));
         return res;
     });
 
     const signOutWithGoogle = () => signOut(auth).then((res) => {
-        runInAction(() => authStore.signOut());
+        runInAction(() => store.signOut());
         return res;
     });
 
-    return authStore.user
+    return store.user
         ? (
             <>
-                <Profile user={authStore.user}/>
+                <Profile {...store.user}/>
                 <SignOut click={signOutWithGoogle}/>
             </>
         )
         : (<SignIn click={signInWithGoogle}/>);
 };
+type AuthProps = {
+    store: typeof AuthStore
+}
 
-const SignIn = (props: any) => {
-
-    return (
-        <button onClick={props.click}>Sign in With Google</button>
-    );
-};
-
-const SignOut = (props: any) => {
+const SignIn = ({click}: SignInProps) => {
 
     return (
-        <button onClick={props.click}>Sign out</button>
+        <button onClick={click}>Sign in With Google</button>
     );
 };
+type SignInProps = {
+    click: any
+}
 
-const Profile = (props: any) => {
+const SignOut = ({click}: SignOutProps) => {
 
-    const {user: {name, photoUrl}} = props;
+    return (
+        <button onClick={click}>Sign out</button>
+    );
+};
+type SignOutProps = {
+    click: any
+}
+
+const Profile = ({name, photoUrl}: ProfileProps) => {
 
     return (
         <>
@@ -59,5 +65,9 @@ const Profile = (props: any) => {
         </>
     );
 };
+type ProfileProps = {
+    name: string,
+    photoUrl: string
+}
 
 export default observer(Auth);

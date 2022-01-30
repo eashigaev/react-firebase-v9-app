@@ -1,25 +1,24 @@
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {observer} from "mobx-react-lite";
 import Todo from '../domain/Todo';
+import TodoListStore from '../stores/TodoListStore';
+import FirebaseTodoListStore from '../stores/FirebaseTodoListStore';
 
-const TodoList = (props: any) => {
-    const {store} = props;
-    const [addTodoState, setAddTodoState] = useState({
-        'title': ''
+const TodoList = ({store}: TodoListProps) => {
+    const [addTodoState, setAddTodoState] = useState<Todo>({
+        completed: false,
+        title: ''
     })
 
-    const handleAddForm = (e: any) => {
+    const handleAddForm = (e: ChangeEvent<HTMLInputElement>) => {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        setAddTodoState({
-            ...addTodoState,
-            [name]: value
-        })
+        setAddTodoState({...addTodoState, [name]: value})
     }
 
-    const addTodo = (e: any) => {
+    const addTodo = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         store.addTodo(addTodoState);
         e.target.reset();
@@ -27,7 +26,6 @@ const TodoList = (props: any) => {
 
     useEffect(() => {
         return store.fetchList();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [store]);
 
     return (
@@ -67,5 +65,8 @@ const TodoList = (props: any) => {
         </>
     );
 };
+type TodoListProps = {
+    store: typeof TodoListStore | typeof FirebaseTodoListStore
+}
 
 export default observer(TodoList);

@@ -6,6 +6,7 @@ import SecondPage from './pages/SecondPage';
 import Auth from './components/Auth';
 import NotFoundPage from './pages/NotFoundPage';
 import AuthStore from './stores/AuthStore';
+import Notify from './components/Notify';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/second" element={<SecondPage/>}/>
                 <Route path="*" element={<NotFoundPage/>}/>
             </Routes>
+            <Notify/>
         </div>
     );
 }

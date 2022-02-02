@@ -31,12 +31,12 @@ const TodoList = ({store}: TodoListProps) => {
     return (
         <>
             <div className="row">
-                <form onSubmit={addTodo}>
+                <form onSubmit={addTodo} className="todo-form">
                     <input name="title" type="text" onChange={handleAddForm}/>
                     <button type="submit">Add New Todo</button>
                 </form>
 
-                <table className="table table-hover">
+                <table id="todo-list">
                     <thead className="thead-light">
                     <tr>
                         <th>Title</th>
@@ -50,10 +50,10 @@ const TodoList = ({store}: TodoListProps) => {
                             <td>{todo.title}</td>
                             <td>{todo.completed ? "✅" : ""}</td>
                             <td>
-                                <button className="btn btn-sm btn-info" onClick={() => store.toggleTodo(todo.id!)}>
+                                <button className="todo-toggle" onClick={() => store.toggleTodo(todo.id!)}>
                                     Toggle
                                 </button>
-                                <button className="btn btn-sm btn-danger" onClick={() => store.removeTodo(todo.id!)}>
+                                <button className="todo-remove" onClick={() => store.removeTodo(todo.id!)}>
                                     Remove
                                 </button>
                             </td>

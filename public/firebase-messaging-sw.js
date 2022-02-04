@@ -9,7 +9,7 @@ self.addEventListener('notificationclick', (event) => {
     // event.stopImmediatePropagation();
     event.notification.close();
     // eslint-disable-next-line no-undef
-    event.waitUntil(clients.openWindow('/second'))
+    event.waitUntil(clients.openWindow('/second'));
 });
 
 // eslint-disable-next-line no-restricted-globals

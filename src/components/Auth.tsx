@@ -39,7 +39,7 @@ type AuthProps = {
 const SignIn = ({click}: SignInProps) => {
 
     return (
-        <button onClick={click}>Sign in With Google</button>
+        <button onClick={click} className="google-auth">Sign in With Google</button>
     );
 };
 type SignInProps = {

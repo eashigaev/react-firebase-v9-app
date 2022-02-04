@@ -2,23 +2,18 @@ import puppeteer, {Browser, HTTPResponse, Page} from "puppeteer";
 
 describe("App", () => {
 
-    // Set true to display the browser
-    const humanFriendly = false;
+    let browser: Browser;
+    let page: Page;
 
+    // Settings (headless: true - an invisible mode)
     let launchOptions = {
-        headless: true,
+        headless: false,
         slowMo: 0
     };
 
-    if (humanFriendly) {
+    if (!launchOptions.headless) {
         jest.setTimeout(60000);
-        launchOptions = {
-            ...launchOptions, headless: false, slowMo: 100
-        }
     }
-
-    let browser: Browser;
-    let page: Page;
 
     // Support
     const path = (url: string) => `http://localhost:3000${url}`
@@ -28,7 +23,9 @@ describe("App", () => {
         todoFormInput: '.todo-form input[type=text]',
         todoFormSubmit: '.todo-form button[type=submit]',
         todoToggle: '.todo-toggle',
-        todoRemove: '.todo-remove'
+        todoRemove: '.todo-remove',
+        notificationsStatus: '.status',
+        googleAuth: '.google-auth',
     }
     const params = {
         toggleMark: '✅'
@@ -70,6 +67,8 @@ describe("App", () => {
         expect(trs.length).toBe(0);
     }
 
+    // Go! Go! Go!
+
     beforeAll(async () => {
         browser = await puppeteer.launch(launchOptions);
         page = await browser.newPage();
@@ -86,10 +85,10 @@ describe("App", () => {
         await page.goto(path('/'));
         await page.waitForSelector('[href="/second"]');
         await page.click('[href="/second"]');
-        expect(await page.url()).toBe(path('/second'));
+        expect(page.url()).toBe(path('/second'));
         await page.waitForSelector('[href="/"]');
         await page.click('[href="/"]');
-        expect(await page.url()).toBe(path('/'));
+        expect(page.url()).toBe(path('/'));
     });
 
     it("shows the not found page", async () => {
@@ -130,6 +129,48 @@ describe("App", () => {
 
         it("manages firebase todos", async () => {
             await itManagesTodoList(false);
+        });
+    });
+
+    describe("Notifications", () => {
+
+        it("needs permission", async () => {
+            await page.goto(path('/'));
+            await page.waitForSelector(selectors.app);
+            const text = await page.$eval(selectors.notificationsStatus, helpers.textContent);
+            expect(text).toContain(!launchOptions.headless ? "denied": "default");
+        });
+
+        it("says permission OK", async () => {
+            const context = browser.defaultBrowserContext();
+            await context.overridePermissions(path(''), ['notifications']);
+            await page.goto(path('/'));
+            const granted = await page.evaluate(async () => {
+                return (await navigator.permissions.query({name: 'notifications'})).state;
+            });
+            expect(granted).toBe('granted');
+            const text = await page.$eval(selectors.notificationsStatus, helpers.textContent);
+            expect(text).toContain('granted');
+            await context.clearPermissionOverrides();
+        });
+    });
+
+    describe("Google authentication", () => {
+
+        jest.setTimeout(10000);
+
+        it("shows popup", async () => {
+            await page.goto(path('/'));
+            const newPagePromise = new Promise<Page>(x => page.once('popup', x));
+            await page.click(selectors.googleAuth);
+            const popup = await newPagePromise;
+            await popup.waitForNavigation();
+            let url = 'https://accounts.google.com';
+            if (!launchOptions.headless) {
+                url += '/o/oauth2/auth/identifier';
+            }
+            expect(popup.url()).toContain(url);
+            await popup.close();
         });
     });
 

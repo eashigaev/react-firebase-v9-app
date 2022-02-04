@@ -6,16 +6,15 @@ import {messaging} from '../providers/firebase';
 // FirebaseError: Messaging: A problem occurred while unsubscribing the user from FCM:
 // Requested entity was not found. (messaging/token-unsubscribe-failed). (messaging/token-unsubscribe-failed).
 
+const vapidKey = "BCSW6XguEeO0QzGo8myF-B3meQgErWJQFAsUT6HPheMwj1uZ1QAeLEB90g7txUAeTCUEEl7Hmf3YSSd9pxJXXok";
+
 const Notify = () => {
 
-    const [currentToken, setCurrentToken] = useState('');
-
-    const vapidKey = "BCSW6XguEeO0QzGo8myF-B3meQgErWJQFAsUT6HPheMwj1uZ1QAeLEB90g7txUAeTCUEEl7Hmf3YSSd9pxJXXok";
+    const [permissionStatus, setPermissionStatus] = useState(Notification.permission);
 
     const onGetTokenSuccess = (currentToken: string) => {
         if (currentToken) { // Send the token to your server and update the UI if necessary
             console.log('The registration token is available.', currentToken);
-            setCurrentToken(currentToken);
         } else { // Show permission request UI
             console.log('No registration token available. Request permission to generate one.');
         }
@@ -25,22 +24,27 @@ const Notify = () => {
     };
 
     useEffect(() => {
-        getToken(messaging, {vapidKey})
-            .then(onGetTokenSuccess)
-            .catch(onGetTokenError);
+        Notification
+            .requestPermission()
+            .then((permission: NotificationPermission) => setPermissionStatus(permission));
     }, []);
 
     useEffect(() => {
-        onMessage(messaging, (payload) => {
+        if (permissionStatus !== 'granted') return;
+
+        getToken(messaging, {vapidKey})
+            .then(onGetTokenSuccess)
+            .catch(onGetTokenError);
+
+        return onMessage(messaging, (payload) => {
             console.log('Received message', payload);
         });
-    }, []);
+    }, [permissionStatus]);
 
     return (
         <>
             <sub>
-                {currentToken && 'Notification permission OK'}
-                {!currentToken && 'Need notification permission'}
+                Notifications permission: <span className="status">{permissionStatus}</span>
             </sub>
         </>
     );

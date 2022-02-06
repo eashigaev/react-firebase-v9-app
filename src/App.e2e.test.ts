@@ -78,7 +78,7 @@ describe("App", () => {
         await page.goto(path('/'));
         await page.waitForSelector(selectors.app);
         const text = await page.$eval(selectors.app, helpers.textContent);
-        expect(text).toContain("Welcome to the app!");
+        expect(text).toContain("React Firebase v9");
     });
 
     it("contains navigation", async () => {
@@ -157,7 +157,7 @@ describe("App", () => {
 
     describe("Google authentication", () => {
 
-        jest.setTimeout(10000);
+        jest.setTimeout(20000);
 
         it("shows popup", async () => {
             await page.goto(path('/'));

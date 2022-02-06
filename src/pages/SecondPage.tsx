@@ -1,17 +1,18 @@
 import TodoList from '../components/TodoList';
-import {Link} from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 import React from 'react';
 import FirebaseTodoListStore from '../stores/FirebaseTodoListStore';
+import {Link, Typography} from '@mui/material';
 
 function SecondPage() {
     return (
         <>
             <main>
-                <h2>Firebase Todo List</h2>
+                <Typography variant="h4">Firebase Todo List</Typography>
                 <TodoList store={FirebaseTodoListStore}/>
             </main>
             <nav>
-                <Link to="/">First Page</Link>
+                <Link component={RouterLink}  to="/">First Page</Link>
             </nav>
         </>
     );

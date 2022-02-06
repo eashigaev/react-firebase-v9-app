@@ -1,14 +1,15 @@
-import {Link} from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 import React from 'react';
+import {Link, Typography} from '@mui/material';
 
 function NotFoundPage() {
     return (
         <>
             <main>
-                <h2>Not Found</h2>
+                <Typography variant="h4">Not Found</Typography>
             </main>
             <nav>
-                <Link to="/">Main page</Link>
+                <Link component={RouterLink}  to="/">Main page</Link>
             </nav>
         </>
     );

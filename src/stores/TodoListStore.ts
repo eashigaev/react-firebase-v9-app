@@ -19,7 +19,7 @@ class TodoListStore {
     }
 
     addTodo(todo: Todo) {
-        this.items.push(todo);
+        this.items.push({id: uuid4(), ...todo});
     }
 
     toggleTodo(id: string) {

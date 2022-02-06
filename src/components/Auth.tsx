@@ -4,6 +4,7 @@ import {auth, googleProvider} from '../providers/firebase';
 import {observer} from 'mobx-react-lite';
 import {runInAction} from 'mobx';
 import AuthStore from '../stores/AuthStore';
+import {Avatar, Box, Button, IconButton} from '@mui/material';
 
 const Auth = ({store}: AuthProps) => {
 
@@ -25,10 +26,10 @@ const Auth = ({store}: AuthProps) => {
 
     return store.user
         ? (
-            <>
+            <Box sx={{flexGrow: 0}}>
                 <Profile {...store.user}/>
                 <SignOut click={signOutWithGoogle}/>
-            </>
+            </Box>
         )
         : (<SignIn click={signInWithGoogle}/>);
 };
@@ -39,7 +40,7 @@ type AuthProps = {
 const SignIn = ({click}: SignInProps) => {
 
     return (
-        <button onClick={click} className="google-auth">Sign in With Google</button>
+        <Button color="inherit" onClick={click} className="google-auth">Sign in With Google</Button>
     );
 };
 type SignInProps = {
@@ -49,7 +50,7 @@ type SignInProps = {
 const SignOut = ({click}: SignOutProps) => {
 
     return (
-        <button onClick={click}>Sign out</button>
+        <Button color="inherit" onClick={click}>Sign out</Button>
     );
 };
 type SignOutProps = {
@@ -60,8 +61,9 @@ const Profile = ({name, photoUrl}: ProfileProps) => {
 
     return (
         <>
-            <img src={photoUrl} alt={name}/>
-            <h3>{name}</h3>
+            <IconButton sx={{p: 0}}>
+                <Avatar alt={name} src={photoUrl} />
+            </IconButton>
         </>
     );
 };

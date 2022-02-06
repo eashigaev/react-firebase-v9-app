@@ -1,6 +1,7 @@
 import {getToken, onMessage} from "firebase/messaging";
 import {useEffect, useState} from "react";
 import {messaging} from '../providers/firebase';
+import {Typography} from '@mui/material';
 
 // TODO: Fix error
 // FirebaseError: Messaging: A problem occurred while unsubscribing the user from FCM:
@@ -42,11 +43,9 @@ const Notify = () => {
     }, [permissionStatus]);
 
     return (
-        <>
-            <sub>
-                Notifications permission: <span className="status">{permissionStatus}</span>
-            </sub>
-        </>
+        <Typography variant="caption" display="block" gutterBottom>
+            Notifications permission: <span className="status">{permissionStatus}</span>
+        </Typography>
     );
 }
 export default Notify;

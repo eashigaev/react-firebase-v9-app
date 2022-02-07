@@ -4,7 +4,7 @@ import React from 'react';
 import FirebaseTodoListStore from '../stores/FirebaseTodoListStore';
 import {Link, Typography} from '@mui/material';
 
-function SecondPage() {
+function FirebasePage() {
     return (
         <>
             <main>
@@ -12,10 +12,10 @@ function SecondPage() {
                 <TodoList store={FirebaseTodoListStore}/>
             </main>
             <nav>
-                <Link component={RouterLink}  to="/">First Page</Link>
+                <Link component={RouterLink}  to="/">In Memory Todo List</Link>
             </nav>
         </>
     );
 }
 
-export default SecondPage;
+export default FirebasePage;

@@ -83,9 +83,9 @@ describe("App", () => {
 
     it("contains navigation", async () => {
         await page.goto(path('/'));
-        await page.waitForSelector('[href="/second"]');
-        await page.click('[href="/second"]');
-        expect(page.url()).toBe(path('/second'));
+        await page.waitForSelector('[href="/firebase"]');
+        await page.click('[href="/firebase"]');
+        expect(page.url()).toBe(path('/firebase'));
         await page.waitForSelector('[href="/"]');
         await page.click('[href="/"]');
         expect(page.url()).toBe(path('/'));
@@ -98,7 +98,7 @@ describe("App", () => {
         expect(text).toContain("Not Found");
     });
 
-    describe("First page", () => {
+    describe("In Memory Todo List Page", () => {
 
         beforeAll(async () => {
             await page.goto(path('/'));
@@ -115,10 +115,10 @@ describe("App", () => {
         });
     });
 
-    describe("Second page", () => {
+    describe("Firebase Todo List Page", () => {
 
         beforeAll(async () => {
-            await page.goto(path('/second'));
+            await page.goto(path('/firebase'));
         });
 
         it("shows the second page", async () => {

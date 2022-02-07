@@ -4,7 +4,7 @@ import {Link as RouterLink} from 'react-router-dom';
 import React from 'react';
 import {Typography, Link} from '@mui/material';
 
-function FirstPage() {
+function InMemoryPage() {
     return (
         <>
             <main>
@@ -12,10 +12,10 @@ function FirstPage() {
                 <TodoList store={TodoListStore}/>
             </main>
             <nav>
-                <Link component={RouterLink} to="/second">Second Page</Link>
+                <Link component={RouterLink} to="/firebase">Firebase Todo List</Link>
             </nav>
         </>
     );
 }
 
-export default FirstPage;
+export default InMemoryPage;

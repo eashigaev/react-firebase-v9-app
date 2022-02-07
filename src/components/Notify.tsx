@@ -1,13 +1,11 @@
 import {getToken, onMessage} from "firebase/messaging";
 import {useEffect, useState} from "react";
-import {messaging} from '../providers/firebase';
+import {messaging, vapidKey} from '../providers/firebase';
 import {Typography} from '@mui/material';
 
 // TODO: Fix error
 // FirebaseError: Messaging: A problem occurred while unsubscribing the user from FCM:
 // Requested entity was not found. (messaging/token-unsubscribe-failed). (messaging/token-unsubscribe-failed).
-
-const vapidKey = "BCSW6XguEeO0QzGo8myF-B3meQgErWJQFAsUT6HPheMwj1uZ1QAeLEB90g7txUAeTCUEEl7Hmf3YSSd9pxJXXok";
 
 const Notify = () => {
 

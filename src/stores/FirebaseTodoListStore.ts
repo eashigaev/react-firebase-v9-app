@@ -23,6 +23,7 @@ class FirebaseTodoListStore {
     addTodo(todo: Todo) {
         const id = uuid4();
         setDoc(todosDoc(id), {...todo, id, completed: false});
+        console.log('hahaha');
     }
 
     toggleTodo(id: string) {

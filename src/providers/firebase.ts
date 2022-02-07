@@ -4,13 +4,14 @@ import {getAuth, GoogleAuthProvider} from "firebase/auth";
 import {getMessaging} from "firebase/messaging";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB41q3d6nBKp7YuvJ_CuAK2ji7oNAJ-7K4",
-    authDomain: "superchat-b1133.firebaseapp.com",
-    projectId: "superchat-b1133",
-    storageBucket: "superchat-b1133.appspot.com",
-    messagingSenderId: "695513250470",
-    appId: "1:695513250470:web:7f649182a9a961ca731267"
+    apiKey: "AIzaSyClHdVjCzvt3TfG8tkBu1v6MbVOUQPKL7Q",
+    authDomain: "react-firebase-v9-app-e157a.firebaseapp.com",
+    projectId: "react-firebase-v9-app-e157a",
+    storageBucket: "react-firebase-v9-app-e157a.appspot.com",
+    messagingSenderId: "180221274510",
+    appId: "1:180221274510:web:2341db35896d4cb4341cdf"
 };
+const vapidKey = "BEoF5d-PPa5Rk_HufeeIQYQDUl-U6oxPpMLxFbDFXTVa8c-u0L1c7nAf6qEWEaEkB3kdTKno2RMnmkFiQajXFOk";
 
 const app = initializeApp(firebaseConfig);
 
@@ -20,7 +21,7 @@ const googleProvider = new GoogleAuthProvider();
 const messaging = getMessaging(app);
 
 const db = getFirestore(app);
-const todosCol = collection(db, 'todo');
+const todosCol = collection(db, 'todos');
 const todosDoc = (id: string) => doc(db, todosCol.path, id);
 
-export {auth, googleProvider, messaging, db, todosCol, todosDoc};
+export {auth, googleProvider, messaging, db, vapidKey, todosCol, todosDoc};

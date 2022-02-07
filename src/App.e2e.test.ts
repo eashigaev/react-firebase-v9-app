@@ -74,7 +74,7 @@ describe("App", () => {
         page = await browser.newPage();
     });
 
-    it("contains the welcome text", async () => {
+    it("contains title", async () => {
         await page.goto(path('/'));
         await page.waitForSelector(selectors.app);
         const text = await page.$eval(selectors.app, helpers.textContent);

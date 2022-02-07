@@ -3,7 +3,7 @@ import {observer} from "mobx-react-lite";
 import Todo from '../domain/Todo';
 import TodoListStore from '../stores/TodoListStore';
 import FirebaseTodoListStore from '../stores/FirebaseTodoListStore';
-import {Box, Button, FormControl, Input, Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material';
+import {Box, Button, FormControl, Input, Stack, Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material';
 
 const TodoList = ({store}: TodoListProps) => {
     const initialTodoState = {
@@ -33,15 +33,13 @@ const TodoList = ({store}: TodoListProps) => {
     return (
         <>
             <Box component="form" onSubmit={addTodo} className="todo-form">
-                <FormControl variant="standard">
+                <Stack sx={{pt: 4}} direction="row" spacing={2} justifyContent="center">
                     <Input id="title" name="title" value={addTodoForm.title} onChange={handleAddTodoForm}/>
-                </FormControl>
-                <FormControl variant="standard">
                     <Button type="submit">Add New Todo</Button>
-                </FormControl>
+                </Stack>
             </Box>
 
-            <Table id="todo-list" size="small">
+            <Table id="todo-list" size="small" sx={{mt: 4, mb: 4}}>
                 <TableHead className="thead-light">
                     <TableRow>
                         <TableCell>Title</TableCell>

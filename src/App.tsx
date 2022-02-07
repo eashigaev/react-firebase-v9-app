@@ -7,15 +7,7 @@ import Auth from './components/Auth';
 import NotFoundPage from './pages/NotFoundPage';
 import AuthStore from './stores/AuthStore';
 import Notify from './components/Notify';
-import {
-    AppBar,
-    Container,
-    createTheme,
-    IconButton,
-    responsiveFontSizes,
-    ThemeProvider,
-    Toolbar, Typography
-} from '@mui/material';
+import {AppBar, Container, createTheme, responsiveFontSizes, ThemeProvider, Toolbar, Typography} from '@mui/material';
 
 function App() {
 
@@ -23,19 +15,21 @@ function App() {
         <div className="App">
             <AppBar position="sticky">
                 <Toolbar variant="dense">
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         React Firebase v9
                     </Typography>
                     <Auth store={AuthStore}/>
                 </Toolbar>
             </AppBar>
-            <Container>
-                <Routes>
-                    <Route path="/" element={<FirstPage/>}/>
-                    <Route path="/second" element={<SecondPage/>}/>
-                    <Route path="*" element={<NotFoundPage/>}/>
-                </Routes>
-                <Notify/>
+            <Container fixed>
+                <Typography variant="body2" sx={{mt: 4}}>
+                    <Routes>
+                        <Route path="/" element={<FirstPage/>}/>
+                        <Route path="/second" element={<SecondPage/>}/>
+                        <Route path="*" element={<NotFoundPage/>}/>
+                    </Routes>
+                    <Notify/>
+                </Typography>
             </Container>
         </div>
     );
